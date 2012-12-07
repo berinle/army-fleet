@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+version = '1.0-SNAPSHOT'
+
+repositories(){
+	mavenCentral()
+}
+
+dependencies {
+	testCompile 'org.testng:testng:6.3.1'
+}
+
+task makeDirs(description:'make all dirs for project setup') << {
+    def sources = [sourceSets.main, sourceSets.test]
+    sources*.allSource*.srcDirs.flatten().each { File srcDir ->
+        println "making $srcDir"
+        srcDir.mkdirs()
+    } 
+}
+
+task wrap(type:Wrapper, description:"create a gradlew") {
+    gradleVersion = '1.3'	
+}
